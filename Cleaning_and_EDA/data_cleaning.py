@@ -89,3 +89,6 @@ df.replace(to_replace = replace_dict, inplace=True)
 df.info()
 # check value counts (validate against GSS website summary)
 printvalcounts(df[df['year']==2014])
+
+# export to csv
+df.to_csv('../Data/gss_subset_cleaned.csv', encoding='utf-8')
