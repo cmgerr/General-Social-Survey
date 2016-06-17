@@ -98,8 +98,6 @@ replace_dict = {
     'hhrace':{8: np.nan, 9: np.nan, 0: np.nan}
 }
 
-
-
 df.replace(to_replace = replace_dict, inplace=True)
 
 # look at info again
