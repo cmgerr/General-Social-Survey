@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # set filepath to csv
-filepath = '../gss.csv'
+filepath = '/Users/canadasfinest189/desktop/ga/gss.csv'
 
 # function to print value counts for all columns
 def printvalcounts(df):
@@ -12,7 +12,7 @@ def printvalcounts(df):
 
 # first, read in the descriptions and variable names for all columns
 descriptions = pd.read_csv(filepath, nrows=1)
-
+print descriptions
 # create a dictionary of variable definitions to use as reference if needed
 desc_dict = {}
 for col in descriptions:
@@ -28,7 +28,8 @@ valid_cols
 col_subset = ['year', 'marital', 'sibs', 'childs',
     'age', 'educ', 'paeduc', 'maeduc', 'speduc', 'sex', 'hompop',
     'income', 'earnrs', 'happy', 'polviews', 'babies', 'preteen',
-    'teens', 'adults', 'divorce', 'health']
+    'teens', 'adults', 'divorce', 'health', 'famgen', 'dwelown',
+    'goodlife', 'weekswrk', 'satfin','satjob', 'dwelling', 'hhrace']
 
 df = pd.read_csv(filepath, header=1, usecols = col_subset)
 
@@ -37,6 +38,7 @@ df.info()
 
 # look at values for each column (validate against GSS website summary)
 printvalcounts(df[df['year']==2014])
+
 
 # very oddly, it seems that all the zero codes are recorded as NaN values. so,
 # replace all NaN values with zero first, then go back through and replace
@@ -80,15 +82,36 @@ replace_dict = {
     'divorce':{1: 'yes', 2:'no', 8: np.nan, 9: np.nan, 0: 'no'},
     # I am making a (rather large) assumption here that the large number of N/A
     # responses are from never-married respondents...
-    'health': {8: np.nan, 9: np.nan, 0:np.nan} # no data for 78,83,86
+    'health': {8: np.nan, 9: np.nan, 0: np.nan}, # no data for 78,83,86
+    'famgen':{0:np.nan},
+    'dwelown':{0:3, 8: np.nan, 9: np.nan},
+    # only 85-present
+    # replaced 0(not applicable) with (other) as I doubt they surveyed 1.8k homeless people...)
+    'goodlife':{8: np.nan, 9: np.nan, 0: np.nan},
+    # very strange amount of n/a for this question... may be worth skipping?
+    'weekswrk':{-1:np.nan, 99:np.nan, 98:np.nan},
+    #31k of these values were -1, which I can assume was 0 weeks worked?
+    # 94-present
+    'satfin':{8: np.nan, 9: np.nan, 0: np.nan},
+    'satjob':{8: np.nan, 9: np.nan, 0: np.nan},
+    'dwelling':{98: np.nan, 99: np.nan, 0: np.nan},
+    'hhrace':{8: np.nan, 9: np.nan, 0: np.nan}
 }
+
+
 
 df.replace(to_replace = replace_dict, inplace=True)
 
 # look at info again
 df.info()
+
 # check value counts (validate against GSS website summary)
 printvalcounts(df[df['year']==2014])
 
+alex_export_cols =['famgen', 'dwelown',
+    'goodlife', 'weekswrk', 'satfin','satjob', 'dwelling', 'hhrace']
+
 # export to csv
 df.to_csv('../Data/gss_subset_cleaned.csv', encoding='utf-8')
+
+df[alex_export_cols].to_csv('../Data/alex_subset_cleaned.csv', encoding='utf-8', index=False)
