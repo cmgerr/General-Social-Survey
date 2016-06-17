@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # set filepath to csv
-filepath = '/Users/canadasfinest189/desktop/ga/gss.csv'
+filepath = '../../gss.csv'
 
 # function to print value counts for all columns
 def printvalcounts(df):
@@ -106,10 +106,7 @@ df.info()
 # check value counts (validate against GSS website summary)
 printvalcounts(df[df['year']==2014])
 
-alex_export_cols =['famgen', 'dwelown',
-    'goodlife', 'weekswrk', 'satfin','satjob', 'dwelling', 'hhrace']
+
 
 # export to csv
 df.to_csv('../Data/gss_subset_cleaned.csv', encoding='utf-8')
-
-df[alex_export_cols].to_csv('../Data/alex_subset_cleaned.csv', encoding='utf-8', index=False)
