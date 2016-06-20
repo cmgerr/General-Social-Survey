@@ -70,11 +70,11 @@ replace_dict = {
     'income': {13: np.nan, 0: np.nan, 98: np.nan, 99: np.nan},
     'earnrs': {9: np.nan},
     'happy': {0: np.nan, 8: np.nan, 9: np.nan},
-    'polviews':{8:4, 9: np.nan, 0:np.nan},
+    'polviews':{8:np.nan, 9: np.nan, 0:np.nan},
     # bizarrely there are huge numbers of N/A responses in 1983, 2002, 2004
     # need to bear this in mind in our modeling...
-    # Also, I'm making an assumption that "don't know" (code 8) can be
-    # interpreted as equal to "moderate" (code 4).
+    # Also, I'm making an assumption that "don't know" (code 8) should be N/A.
+    # possibly change this later.
     'babies':{9: np.nan},
     'preteen': {9:np.nan},
     'teens':{9: np.nan},
