@@ -69,7 +69,7 @@ replace_dict = {
     'hompop': {99: np.nan},
     'income': {13: np.nan, 0: np.nan, 98: np.nan, 99: np.nan},
     'earnrs': {9: np.nan},
-    'happy': {0: np.nan, 8: np.nan, 9: np.nan},
+    'happy': {1:6, 3:5, 0: np.nan, 8: np.nan, 9: np.nan},
     'polviews':{8:np.nan, 9: np.nan, 0:np.nan},
     # bizarrely there are huge numbers of N/A responses in 1983, 2002, 2004
     # need to bear this in mind in our modeling...
@@ -82,31 +82,45 @@ replace_dict = {
     'divorce':{1: 'yes', 2:'no', 8: np.nan, 9: np.nan, 0: 'no'},
     # I am making a (rather large) assumption here that the large number of N/A
     # responses are from never-married respondents...
-    'health': {8: np.nan, 9: np.nan, 0: np.nan}, # no data for 78,83,86
+    'health': {1:14, 2:13, 3:12, 4:11, 8: np.nan, 9: np.nan, 0: np.nan}, # no data for 78,83,86
 # alex's shit
     'dwelown':{1:'owns', 2:'rents', 3:'other', 0:'other', 8: np.nan, 9: np.nan},
     # only 85-present & "Not Applicable" is equated to "other" here
     # replaced 0(not applicable) with (other) as I doubt they surveyed 1.8k homeless people...)
 
-    'goodlife':{8: np.nan, 9: np.nan, 0: np.nan},
+    'goodlife':{1:15, 2:14, 3:13, 4:12, 5:11, 8: np.nan, 9: np.nan, 0: np.nan},
     # very strange amount of n/a for this question... may be worth skipping?
     'weekswrk':{-1:np.nan, 99:np.nan, 98:np.nan},
     # 94-present
 
-    'satfin':{8: np.nan, 9: np.nan, 0: np.nan},
-    'satjob':{8: np.nan, 9: np.nan, 0: np.nan},
+    'satfin':{1:6, 3:5, 8: np.nan, 9: np.nan, 0: np.nan},
+    'satjob':{1:14, 2:13, 3:12, 4:11, 8: np.nan, 9: np.nan, 0: np.nan},
     'dwelling':{2:'house', 3:'house', 6:'house', 4:'apt', 5:'apt', 7:'apt', 8:'apt', 9:'apt',
     1:'other', 10: 'other', 98: np.nan, 99: np.nan, 0: np.nan},
     # house: detached, side by side, & rowhouse
     # apartment: 2 units(above/below), 3-4fam house, all types of apartment
     # other: trailer & other
-
     'hhrace':{1:'white', 2:'black', 3:'american_indian', 4:'asian', 5: 'other/mixed',
     8: np.nan, 9: np.nan, 0: np.nan}
 }
 
-df.replace(to_replace = replace_dict, inplace=True)
+# inverse value dictionary to make scales intuitive... run above and then run
+# second replace
+second_replace = {'happy': {6:3, 5:1},
+    'health': {14:4, 13:3, 12:2, 11:1},
+    'goodlife':{15:5, 14:4, 13:3, 12:2, 11:5},
+    'satfin':{6:3, 5:1},
+    'satjob':{14:4, 13:3, 12:2, 11:5}
+}
 
+
+
+# run first
+df.replace(to_replace = replace_dict, inplace=True)
+# run second
+df.replace(to_replace = second_replace, inplace=True)
+
+printvalcounts(df[df['year']==2014])
 # look at info again
 df.info()
 
