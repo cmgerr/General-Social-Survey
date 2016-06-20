@@ -84,7 +84,7 @@ replace_dict = {
     # responses are from never-married respondents...
     'health': {8: np.nan, 9: np.nan, 0: np.nan}, # no data for 78,83,86
 # alex's shit
-    'dwelown':{1:'owns', 2:'rents', 3:'other', 0:'other' 8: np.nan, 9: np.nan},
+    'dwelown':{1:'owns', 2:'rents', 3:'other', 0:'other', 8: np.nan, 9: np.nan},
     # only 85-present & "Not Applicable" is equated to "other" here
     # replaced 0(not applicable) with (other) as I doubt they surveyed 1.8k homeless people...)
 
@@ -92,11 +92,17 @@ replace_dict = {
     # very strange amount of n/a for this question... may be worth skipping?
     'weekswrk':{-1:np.nan, 99:np.nan, 98:np.nan},
     # 94-present
-    
+
     'satfin':{8: np.nan, 9: np.nan, 0: np.nan},
     'satjob':{8: np.nan, 9: np.nan, 0: np.nan},
-    'dwelling':{98: np.nan, 99: np.nan, 0: np.nan},
-    'hhrace':{8: np.nan, 9: np.nan, 0: np.nan}
+    'dwelling':{2:'house', 3:'house', 6:'house', 4:'apt', 5:'apt', 7:'apt', 8:'apt', 9:'apt',
+    1:'other', 10: 'other', 98: np.nan, 99: np.nan, 0: np.nan},
+    # house: detached, side by side, & rowhouse
+    # apartment: 2 units(above/below), 3-4fam house, all types of apartment
+    # other: trailer & other
+
+    'hhrace':{1:'white', 2:'black', 3:'american_indian', 4:'asian', 5: 'other/mixed',
+    8: np.nan, 9: np.nan, 0: np.nan}
 }
 
 df.replace(to_replace = replace_dict, inplace=True)
@@ -110,4 +116,4 @@ printvalcounts(df[df['year']==2014])
 
 
 # export to csv
-df.to_csv('../Data/gss_subset_cleaned.csv', encoding='utf-8')
+df.to_csv('../Data/gss_subset_cleaned.csv', encoding='utf-8', index=False)
