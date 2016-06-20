@@ -28,7 +28,7 @@ valid_cols
 col_subset = ['year', 'marital', 'sibs', 'childs',
     'age', 'educ', 'paeduc', 'maeduc', 'speduc', 'sex', 'hompop',
     'income', 'earnrs', 'happy', 'polviews', 'babies', 'preteen',
-    'teens', 'adults', 'divorce', 'health', 'famgen', 'dwelown',
+    'teens', 'adults', 'divorce', 'health', 'dwelown',
     'goodlife', 'weekswrk', 'satfin','satjob', 'dwelling', 'hhrace']
 
 df = pd.read_csv(filepath, header=1, usecols = col_subset)
@@ -83,15 +83,16 @@ replace_dict = {
     # I am making a (rather large) assumption here that the large number of N/A
     # responses are from never-married respondents...
     'health': {8: np.nan, 9: np.nan, 0: np.nan}, # no data for 78,83,86
-    'famgen':{0:np.nan},
-    'dwelown':{0:3, 8: np.nan, 9: np.nan},
-    # only 85-present
+# alex's shit
+    'dwelown':{1:'owns', 2:'rents', 3:'other', 0:'other' 8: np.nan, 9: np.nan},
+    # only 85-present & "Not Applicable" is equated to "other" here
     # replaced 0(not applicable) with (other) as I doubt they surveyed 1.8k homeless people...)
+
     'goodlife':{8: np.nan, 9: np.nan, 0: np.nan},
     # very strange amount of n/a for this question... may be worth skipping?
     'weekswrk':{-1:np.nan, 99:np.nan, 98:np.nan},
-    #31k of these values were -1, which I can assume was 0 weeks worked?
     # 94-present
+    
     'satfin':{8: np.nan, 9: np.nan, 0: np.nan},
     'satjob':{8: np.nan, 9: np.nan, 0: np.nan},
     'dwelling':{98: np.nan, 99: np.nan, 0: np.nan},
