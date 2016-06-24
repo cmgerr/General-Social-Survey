@@ -83,7 +83,7 @@ replace_dict = {
     # I am making a (rather large) assumption here that the large number of N/A
     # responses are from never-married respondents...
     'health': {1:14, 2:13, 3:12, 4:11, 8: np.nan, 9: np.nan, 0: np.nan}, # no data for 78,83,86
-# alex's shit
+# alex's additions:
     'dwelown':{1:'owns', 2:'rents', 3:'other', 8: np.nan, 9: np.nan},
     # only 85-present & "Not Applicable" is equated to "other" here
     # replaced 0(not applicable) with (other) as I doubt they surveyed 1.8k homeless people...)
