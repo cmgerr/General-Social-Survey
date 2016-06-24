@@ -5,13 +5,17 @@ import matplotlib.pyplot as plt
 import matplotlib
 %matplotlib inline
 matplotlib.style.use('ggplot')
-from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.linear_model import LogisticRegression, LinearRegression, Lasso
+
+
 
 # define random state
 rs = 98
 df = pd.read_csv('../Data/gss_subset_cleaned.csv')
+test = pd.read_csv('../Data/gss_subset_cleaned.csv')
+test['dwelling'].value_counts()
 
-categorical_cols = ['marital', 'divorce', 'sex']
+categorical_cols = ['marital', 'sex','divorce', 'dwelling', 'hhrace', 'dwelown']
 df = pd.get_dummies(df, columns=categorical_cols, drop_first=True)
 df.drop(['paeduc', 'maeduc', 'speduc'], axis=1, inplace=True)
 df.info()
@@ -28,20 +32,26 @@ def get_subset(year, df_whole, ycol):
     result = result.dropna()
     return result
 
-def get_linear_model_coefs(df_year, ycol):
+def get_model_coefs(model, df_year, ycol):
     X = df_year.drop(ycol, axis=1)
     y = df_year[ycol]
-    model = LinearRegression(normalize=True, n_jobs=-1)
-    model.fit(X, y)
+    model1 = model
+    model1.fit(X, y)
     feat_names = X.columns
     coefs = model.coef_
+    #adding model score
+    # score =
     result = dict(zip(feat_names, coefs))
     return result
 
 coef_dict = {}
 for yr in np.unique(df.year):
     df_year = get_subset(yr, df, 'happy')
-    coefs = get_linear_model_coefs(df_year, 'happy')
+    coefs = get_model_coefs(Lasso(alpha=.05), df_year, 'happy')
     coef_dict[yr] = coefs
 
+
 print coef_dict
+
+coef_df = pd.DataFrame(coef_dict)
+coef_df
