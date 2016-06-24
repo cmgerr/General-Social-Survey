@@ -32,7 +32,7 @@ col_subset = ['year', 'marital', 'sibs', 'childs',
     'goodlife', 'weekswrk', 'satfin','satjob', 'dwelling', 'hhrace']
 
 df = pd.read_csv(filepath, header=1, usecols = col_subset)
-
+df
 # look at info
 df.info()
 
@@ -84,7 +84,7 @@ replace_dict = {
     # responses are from never-married respondents...
     'health': {1:14, 2:13, 3:12, 4:11, 8: np.nan, 9: np.nan, 0: np.nan}, # no data for 78,83,86
 # alex's shit
-    'dwelown':{1:'owns', 2:'rents', 3:'other', 0:'other', 8: np.nan, 9: np.nan},
+    'dwelown':{1:'owns', 2:'rents', 3:'other', 8: np.nan, 9: np.nan},
     # only 85-present & "Not Applicable" is equated to "other" here
     # replaced 0(not applicable) with (other) as I doubt they surveyed 1.8k homeless people...)
 
