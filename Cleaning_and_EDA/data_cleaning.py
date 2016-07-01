@@ -86,7 +86,7 @@ replace_dict = {
 # alex's additions:
     'dwelown':{1:'owns', 2:'rents', 3:'other', 8: np.nan, 9: np.nan},
     # only 85-present & "Not Applicable" is equated to "other" here
-    # replaced 0(not applicable) with (other) as I doubt they surveyed 1.8k homeless people...)
+
 
     'goodlife':{1:15, 2:14, 3:13, 4:12, 5:11, 8: np.nan, 9: np.nan, 0: np.nan},
     # very strange amount of n/a for this question... may be worth skipping?
@@ -108,7 +108,7 @@ replace_dict = {
 # second replace
 second_replace = {'happy': {6:3, 5:1},
     'health': {14:4, 13:3, 12:2, 11:1},
-    'goodlife':{15:5, 14:4, 13:3, 12:2, 11:5},
+    'goodlife':{15:5, 14:4, 13:3, 12:2, 11:1},
     'satfin':{6:3, 5:1},
     'satjob':{14:4, 13:3, 12:2, 11:1}
 }
