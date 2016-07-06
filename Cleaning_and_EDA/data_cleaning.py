@@ -83,8 +83,9 @@ replace_dict = {
     # I am making a (rather large) assumption here that the large number of N/A
     # responses are from never-married respondents...
     'health': {1:14, 2:13, 3:12, 4:11, 8: np.nan, 9: np.nan, 0: np.nan}, # no data for 78,83,86
+
 # alex's additions:
-    'dwelown':{1:'owns', 2:'rents', 3:'other', 8: np.nan, 9: np.nan},
+    'dwelown': {1: 'owns', 2: 'rents', 3: 'other', 8: np.nan, 9: np.nan, 0:'other'},
     # only 85-present & "Not Applicable" is equated to "other" here
 
 
@@ -121,11 +122,23 @@ df.replace(to_replace = replace_dict, inplace=True)
 df.replace(to_replace = second_replace, inplace=True)
 
 printvalcounts(df[df['year']==2014])
+
 # look at info again
 df.info()
 
 # check value counts (validate against GSS website summary)
 printvalcounts(df[df['year']==2014])
 
+# dwelown other replace function
+# check number of "other" values
+df.dwelown.value_counts()
+
+other_replace = {'dwelown':{'other': np.nan}}
+df[df['year'] < 1985.0] = df[df['year'] < 1985.0].replace(to_replace=other_replace)
+# check again
+df.dwelown.value_counts()
+
 # export to csv
 df.to_csv('../Data/gss_subset_cleaned.csv', encoding='utf-8', index=False)
+
+df.dwelown
